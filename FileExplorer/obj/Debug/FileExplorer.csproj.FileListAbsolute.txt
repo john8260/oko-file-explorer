@@ -1,0 +1,5 @@
+\\vmware-host\shared folders\documentos\visual studio 2010\Projects\FileExplorer\FileExplorer\bin\FileExplorer.dll
+\\vmware-host\shared folders\documentos\visual studio 2010\Projects\FileExplorer\FileExplorer\bin\FileExplorer.pdb
+\\vmware-host\shared folders\documentos\visual studio 2010\Projects\FileExplorer\FileExplorer\obj\Debug\ResolveAssemblyReference.cache
+\\vmware-host\shared folders\documentos\visual studio 2010\Projects\FileExplorer\FileExplorer\obj\Debug\FileExplorer.dll
+\\vmware-host\shared folders\documentos\visual studio 2010\Projects\FileExplorer\FileExplorer\obj\Debug\FileExplorer.pdb
