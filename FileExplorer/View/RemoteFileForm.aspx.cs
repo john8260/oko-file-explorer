@@ -16,11 +16,26 @@ namespace CSRemoteUploadAndDownload
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            RemoteUpload uploadClient = null;
             //directory controller instance
             DirectoryController controller = new DirectoryController();
             //getting the directories (the key antique in web.config is defined in months)
-            List<Directorio> directories = controller.getDirectories();
+            if (Directory.Exists(WebConfigurationManager.AppSettings["from"]))
+            {
+                List<Directorio> directories = controller.getDirectories();
+                Label1.Text = uploadFiles(directories);                                
+            }
+            else
+            {
+                Label1.Text = "Invalid Directory";
+            }
+        }
+
+        private string uploadFiles(List<Directorio> directories)
+        {
+            //Delcaring parsing variables
+            RemoteUpload uploadClient = null;
+            string response = "";
+
             foreach (Directorio dir in directories)
             {
                 //getting the directory files
@@ -30,18 +45,20 @@ namespace CSRemoteUploadAndDownload
                     //getting the byte array of the file
                     byte[] fileData = File.ReadAllBytes(fil.Path);
                     //uploading the file to remote server
-                    uploadClient = new FtpRemoteUpload(fileData,fil.Name,fil.Path);
-
-                    if (uploadClient.UploadFile())
+                    try
                     {
-                        Response.Write("Upload is complete");
+                        uploadClient = new FtpRemoteUpload(fileData, fil.Name, fil.Path);
+                        uploadClient.UploadFile();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Response.Write(" Failed to upload");
+                        response = ex.Message;
+                        return response;
                     }
                 }
             }
+            response = "upload is complete";
+            return response;
         }
     }
 }

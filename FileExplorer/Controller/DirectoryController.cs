@@ -4,21 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using FileExplorer.Model;
-using System.Collections.Generic;
 using System.IO;
 
 namespace FileExplorer.Controller
 {
     public class DirectoryController
     {
+        //setting the paths
+        private static string fromPath = WebConfigurationManager.AppSettings["from"].ToString();
+        private static string toPath = WebConfigurationManager.AppSettings["to"].ToString();
+        private static string antique = WebConfigurationManager.AppSettings["antique"].ToString(); //this number is defined as months
         /// <summary>
         /// This method retrieves the directories to upload with its files
         /// </summary>
         public List<Directorio> getDirectories(){
-            //setting the paths
-            string fromPath = WebConfigurationManager.AppSettings["from"];
-            string toPath = WebConfigurationManager.AppSettings["to"];
-            string antique = WebConfigurationManager.AppSettings["antique"]; //this number is defined as months
             //Parsing variables
             int months = 0;
             Directorio directorio;

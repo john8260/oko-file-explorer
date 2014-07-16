@@ -19,8 +19,9 @@
             <tr>
                 <td colspan="2">
                     <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click"
-                        Height="100%" Width="25%" />
+                        Height="100%" Width="40%" />
                     <br />
+                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                 </td>
             </tr>
         </table>

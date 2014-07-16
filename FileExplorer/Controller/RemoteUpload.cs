@@ -56,11 +56,7 @@ namespace CSRemoteUploadAndDownload
         {
             this.FileData = fileData;
             this.FileName = fileName;
-            this.UrlString = urlString.EndsWith("/") ? urlString : urlString + "/";
-            string newFileName = DateTime.Now.ToString("yyMMddhhmmss")
-                        + DateTime.Now.Millisecond.ToString()
-                        + Path.GetExtension(this.FileName);
-            this.UrlString = this.UrlString + newFileName;
+            this.UrlString = System.Web.Configuration.WebConfigurationManager.AppSettings["to"].ToString();
         }
 
         /// <summary>
@@ -129,16 +125,19 @@ namespace CSRemoteUploadAndDownload
         {
            
             // Whether credentials are needed use this
-            String username = WebConfigurationManager.AppSettings["UserName"];
-            String password = WebConfigurationManager.AppSettings["pass"];
-           
+            string username = WebConfigurationManager.AppSettings["UserName"];
+            string password = WebConfigurationManager.AppSettings["pass"];
+            string FtpFilePath = this.UrlString + this.FileName;
+            //setting the url
+            Uri targetUri = new Uri(Uri.EscapeUriString(FtpFilePath));
+            
             FtpWebRequest reqFTP;
-            reqFTP = (FtpWebRequest)FtpWebRequest.Create(this.UrlString);
+            reqFTP = (FtpWebRequest)FtpWebRequest.Create(targetUri);
             reqFTP.KeepAlive = true;
-            reqFTP.Credentials = new NetworkCredential(username,password);
+            reqFTP.Credentials = new NetworkCredential(username.Normalize(),password.Normalize());
             reqFTP.Method = WebRequestMethods.Ftp.UploadFile;
             reqFTP.UseBinary = true;
-            reqFTP.EnableSsl = true;
+            //reqFTP.EnableSsl = true;
             reqFTP.ContentLength = this.FileData.Length;
             
             int buffLength = 2048;
@@ -162,7 +161,7 @@ namespace CSRemoteUploadAndDownload
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to upload", ex.InnerException);
+                throw new Exception(ex.Message);
             }
         }
 
